@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Maproute"
+            android:name=".maproute"
             android:label="@string/title_activity_maproute">
         </activity>
     </application>
