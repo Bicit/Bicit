@@ -16,7 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 
 
-public class maproute extends AppCompatActivity
+public class Maproute extends AppCompatActivity
         implements
         OnMyLocationButtonClickListener,
         OnMapReadyCallback,
