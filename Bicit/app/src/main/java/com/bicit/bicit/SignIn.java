@@ -35,12 +35,12 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
 
         // Views
-        //mStatusTextView = (TextView) findViewById(R.id.status);
+        //mStatusTextView = (TextView) findViewById(R.id.status); <---------Comentado PIPE_D--------->
 
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         /*findViewById(R.id.sign_out_button).setOnClickListener(this);
-        findViewById(R.id.disconnect_button).setOnClickListener(this);*/
+        findViewById(R.id.disconnect_button).setOnClickListener(this);<---------Comentado PIPE_D--------->*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_layout);
@@ -78,10 +78,10 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
-            //updateUI(true);
+            //updateUI(true); <---------Comentado PIPE_D--------->
         } else {
             // Signed out, show unauthenticated UI.
-            //updateUI(false);
+            //updateUI(false); <---------Comentado PIPE_D--------->
         }
     }
 
@@ -96,7 +96,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.disconnect_button:
                 revokeAccess();
-                break;*/
+                break;  <---------Comentado PIPE_D--------->*/
         }
     }
 }
