@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "daring-charmer-125215",
+    "project_number": "280086822501",
+    "name": "Bicit"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280086822501:android:33a9a6474cc47189",
+        "client_id": "android:com.bicit.bicit",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.bicit.bicit",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280086822501-42s4v5hl01fcmoepcpbeffqalt5760mq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bicit.bicit",
+            "certificate_hash": "F1322776CE7E3A2D7BFD0569B144C32928328C4A"
+          }
+        },
+        {
+          "client_id": "280086822501-r21v35e9v9juga9cufg2ukq7n07mgq2v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
