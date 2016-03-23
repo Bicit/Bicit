@@ -8,6 +8,21 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
+    <!--
+        A continuacion se colocan los permisos que permitiran una comunicacion
+        a internet, acceso a la localizacion gps y acceso a escritura.
+    -->
+    <permission
+        android:name="com.bicit.bicit.permission.MAPS_RECEIVE"
+        />
+    <uses-permission android:name="com.bicit.bicit.permission.MAPS_RECEIVE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    
 
     <application
         android:allowBackup="true"
@@ -40,11 +55,6 @@
         <activity
             android:name=".Maproute"
             android:label="@string/title_activity_maproute">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
