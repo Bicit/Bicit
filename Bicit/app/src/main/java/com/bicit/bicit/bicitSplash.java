@@ -13,7 +13,7 @@ public class bicitSplash extends Activity {
     // ===========================================================
     // Fields
     // ===========================================================
-    private final int SPLASH_DISPLAY_LENGHT = 1500;
+    private final int SPLASH_DISPLAY_LENGHT = 1000;
     // ===========================================================
     // "Constructors"
     // ===========================================================
