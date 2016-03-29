@@ -13,7 +13,7 @@ public class bicitSplash extends Activity {
     // ===========================================================
     // Fields
     // ===========================================================
-    private final int SPLASH_DISPLAY_LENGHT = 1500;
+    private final int SPLASH_DISPLAY_LENGHT = 1000;
     // ===========================================================
     // "Constructors"
     // ===========================================================
@@ -28,7 +28,7 @@ public class bicitSplash extends Activity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(bicitSplash.this,Maproute.class);
+                Intent mainIntent = new Intent(bicitSplash.this,LoginActivity.class);
                 bicitSplash.this.startActivity(mainIntent);
                 bicitSplash.this.finish();
             }
