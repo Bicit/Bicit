@@ -53,7 +53,7 @@ public class Maproute extends FragmentActivity implements OnMapReadyCallback {
         mMap.setMyLocationEnabled(true);
 
         //Se busca el mejor proveedor de localizacion que tenga el celular para luego
-        //Obtener ultima posición que se conoce del usuario
+        //Obtener ultima posicion que se conoce del usuario
         //Y centrar el mapa en ese lugar
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
