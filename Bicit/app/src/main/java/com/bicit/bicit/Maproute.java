@@ -15,6 +15,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.kml.KmlLayer;
 import com.google.maps.android.kml.KmlPlacemark;
@@ -47,37 +48,16 @@ public class Maproute extends FragmentActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        //Se activa la capa para que el usuario se ubique en el mapa,
-        //Es decir aparecera la opcion para ubicarse y aparecera un punto
-        //Azul que indica su posicion geografica
-        mMap.setMyLocationEnabled(true);
 
         //Se busca el mejor proveedor de localizacion que tenga el celular para luego
-        //Obtener ultima posición que se conoce del usuario
+        //Obtener ultima posiciï¿½n que se conoce del usuario
         //Y centrar el mapa en ese lugar
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         String provider = locationManager.getBestProvider(criteria, true);
         Location location = locationManager.getLastKnownLocation(provider);
 
-        //Se mueve el mapa al lugar y se hace un zoom de 15
-        LatLng posicion = new LatLng(location.getLatitude(),location.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(posicion));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-
-        //Se accede al archivo kml que tiene la descripcion de las lineas que se deben dibujar y su posicion
-        //El archivo se encuentra en la ruta /Bicit/Bicit/app/src/main/res/raw
-        //Para modificar acceder a mymaps con la cuenta de bicit, una vez modificado descargar el archivo
-        //Dando a la opcion export to kml y darle a la opcion de exportar en kml en vez de kmz.
-        //Reemplazar el archivo descargado por el antiguo en la carpeta de resources
-        try {
-            KmlLayer layer = new KmlLayer(mMap, R.raw.ciclorutasmap, getApplicationContext());
-            layer.addLayerToMap();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Mapa controladorMapa = new Mapa(R.raw.ciclorutasmap, mMap, location, getApplicationContext());
+        mMap = controladorMapa.cargarMapa();
     }
 }
