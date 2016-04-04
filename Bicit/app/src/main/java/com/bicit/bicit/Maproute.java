@@ -30,8 +30,6 @@ import java.util.logging.Handler;
 public class Maproute extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private ListView mDrawerList;
-    private ArrayAdapter<String> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +39,7 @@ public class Maproute extends FragmentActivity implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        mDrawerList = (ListView)findViewById(R.id.navList);
     }
-    private void addDrawerItems() {
-        String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
-        mDrawerList.setAdapter(mAdapter);
-    }
-
 
     /**
      * Este metodo se ejecuta cuando el mapa esta listo para ser mostrado
