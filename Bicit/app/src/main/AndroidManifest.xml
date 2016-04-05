@@ -52,20 +52,19 @@
             android:label="@string/title_activity_bicitSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Maproute"
-            android:label="@string/title_activity_maproute"></activity>
+            android:label="@string/title_activity_maproute"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".LoginActivity"
             android:label="Login"></activity>
         <activity
             android:name=".NavigationDrawer"
             android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme"></activity>
     </application>
-
 </manifest>

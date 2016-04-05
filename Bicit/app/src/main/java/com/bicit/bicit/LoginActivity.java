@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onClick(View v ){
         String user = txtUser.getText().toString();
         String password = txtPassword.getText().toString();
-        if(user.equals("bicit") && password.equals("bicit")){
+        if(user.equals("") && password.equals("")){
             Intent intent = new Intent(LoginActivity.this,Maproute.class);
             startActivity(intent);
         }
