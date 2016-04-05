@@ -13,37 +13,20 @@
         android:src="@drawable/logobicit"
         />
 
-    <TextView android:id="@+id/lblUsuario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="@string/user"
-        android:textSize="25dp"/>
-
-    <EditText android:id="@+id/txtUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text" />
-
-    <TextView android:id="@+id/lblPassword"
-        android:textStyle="bold"
-        android:textSize="25dp"
-        android:text="@string/password"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         />
 
-    <EditText android:id="@+id/txtPassword"
-        android:inputType="textPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
 
     <Button android:id="@+id/btnLogin"
         android:text="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
         android:onClick="onClick"
         />
 
