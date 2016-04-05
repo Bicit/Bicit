@@ -26,6 +26,7 @@ import org.apache.http.conn.scheme.HostNameResolver;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Handler;
 
 public class Maproute extends FragmentActivity implements OnMapReadyCallback {
@@ -51,6 +52,8 @@ public class Maproute extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.setMyLocationEnabled(true);
+
         //Se busca el mejor proveedor de localizacion que tenga el celular para luego
         //Obtener ultima posicion que se conoce del usuario
         //Obtener ultima posici�n que se conoce del usuario
@@ -64,8 +67,18 @@ public class Maproute extends FragmentActivity implements OnMapReadyCallback {
             // TODO: Consider calling
             return;
         }
-
-        Location location = locationManager.getLastKnownLocation(provider);
+        Location location = null;
+        if(locationManager.isProviderEnabled(provider)){
+            location = locationManager.getLastKnownLocation(provider);
+        }else{
+            List<String> listaProviders = locationManager.getAllProviders();
+            for(int i=0; i<listaProviders.size(); i++){
+              if(locationManager.isProviderEnabled(listaProviders.get(i))){
+                  location = locationManager.getLastKnownLocation(listaProviders.get(i));
+                  break;
+              }
+            }
+        }
 
         Mapa controladorMapa = new Mapa(R.raw.ciclorutasmap, mMap, location, getApplicationContext());
         mMap = controladorMapa.cargarMapa();

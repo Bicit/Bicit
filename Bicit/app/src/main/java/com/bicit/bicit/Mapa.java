@@ -4,6 +4,7 @@ import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,7 +35,6 @@ public class Mapa {
         //Se activa la capa para que el usuario se ubique en el mapa,
         //Es decir aparecera la opcion para ubicarse y aparecera un punto
         //Azul que indica su posicion geografica
-        mapaVisual.setMyLocationEnabled(true);
 
 
         this.cambioPosicion(posicion);
@@ -58,9 +58,16 @@ public class Mapa {
 
     public GoogleMap cambioPosicion(Location posicionNueva){
         //Se mueve el mapa al lugar y se hace un zoom de 15
-        LatLng latitud = new LatLng(posicion.getLatitude(), posicion.getLongitude());
-        mapaVisual.moveCamera(CameraUpdateFactory.newLatLng(latitud));
-        mapaVisual.animateCamera(CameraUpdateFactory.zoomTo(15));
+        if(posicionNueva != null){
+            LatLng latitud = new LatLng(posicion.getLatitude(), posicion.getLongitude());
+            mapaVisual.moveCamera(CameraUpdateFactory.newLatLng(latitud));
+            mapaVisual.animateCamera(CameraUpdateFactory.zoomTo(16));
+        }else{
+            LatLng latitudDefault = new LatLng(6.229758, -75.575433);
+            mapaVisual.moveCamera(CameraUpdateFactory.newLatLng(latitudDefault));
+            mapaVisual.animateCamera(CameraUpdateFactory.zoomTo(16));
+            Toast.makeText(this.contextoActual, "No se ha podido conocer su posicion", Toast.LENGTH_SHORT).show();
+        }
         return mapaVisual;
     }
 }
