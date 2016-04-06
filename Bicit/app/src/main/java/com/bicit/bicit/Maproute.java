@@ -54,10 +54,10 @@ public class Maproute extends AppCompatActivity implements OnMapReadyCallback,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maproute);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +66,7 @@ public class Maproute extends AppCompatActivity implements OnMapReadyCallback,
                         .setAction("Action", null).show();
             }
         });
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -76,6 +75,13 @@ public class Maproute extends AppCompatActivity implements OnMapReadyCallback,
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+
     }
 
     /**
@@ -153,9 +159,6 @@ public class Maproute extends AppCompatActivity implements OnMapReadyCallback,
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        boolean x = false;
-        Fragment fragment = null;
-
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
@@ -168,15 +171,6 @@ public class Maproute extends AppCompatActivity implements OnMapReadyCallback,
 
         } else if (id == R.id.nav_send) {
 
-        }
-
-        if(x){
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_navigation_drawer, fragment)
-                    .commit();
-
-            item.setChecked(true);
-            getSupportActionBar().setTitle(item.getTitle());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
