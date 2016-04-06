@@ -75,7 +75,7 @@ public class Maproute extends AppCompatActivity implements OnMapReadyCallback,
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        //navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     /**
