@@ -17,5 +17,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="facebook_app_id">1698719150387306</string>
+    <string name="title_activity_eventos">Eventos</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>
