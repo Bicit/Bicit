@@ -91,7 +91,7 @@ public class Maproute extends AppCompatActivity implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setPadding(0,150,0,0);
+        mMap.setPadding(0,130,0,0);
         mMap.setMyLocationEnabled(true);
         //Se busca el mejor proveedor de localizacion que tenga el celular para luego
         //Obtener ultima posicion que se conoce del usuario
@@ -159,7 +159,7 @@ public class Maproute extends AppCompatActivity implements OnMapReadyCallback,
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_maproute) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
