@@ -6,16 +6,47 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <include
-        layout="@layout/app_bar_navigation_drawer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <TextView
-        android:id="@+id/eventName"
-        android:text="@string/"
+        android:id="@+id/txtVName"
+        android:text="@string/eventName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:textSize="20dp"
+        android:textColor="@color/cardview_dark_background"
         />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eventName"
+        android:text="@string/eEvent"
+        />
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/rbPrivate"
+            android:text="Privado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbPublic"
+            android:text="Publico"/>
+    </RadioGroup>
 
+    <Button
+        android:id="@+id/btnMap"
+        android:text="@string/btMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/btnCreate"
+        android:text="Crear Evento"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"/>
 </LinearLayout>
