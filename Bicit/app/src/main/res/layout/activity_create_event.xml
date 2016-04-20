@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textStyle="normal"
         android:textSize="20dp"
-        android:textColor="@color/cardview_dark_background"
+
         />
     <EditText
         android:layout_width="match_parent"
@@ -22,6 +22,7 @@
         android:text="@string/eEvent"
         />
     <RadioGroup
+        android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <RadioButton
@@ -36,7 +37,30 @@
             android:id="@+id/rbPublic"
             android:text="Publico"/>
     </RadioGroup>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txStart"
+        android:textSize="20dp"
+        android:text="Fecha de Inicio"/>
+    <EditText
+        android:id="@+id/startDate"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:text="DD/MM/AA"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txEnd"
+        android:textSize="20dp"
+        android:text="Fecha Final"/>
+    <EditText
+        android:id="@+id/endDate"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:text="DD/MM/AA"/>
     <Button
         android:id="@+id/btnMap"
         android:text="@string/btMap"
@@ -48,5 +72,7 @@
         android:text="Crear Evento"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:onClick="createEvent"/>
+
 </LinearLayout>
