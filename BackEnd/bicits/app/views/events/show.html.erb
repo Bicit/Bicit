@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @event.nombre %>
+</p>
+
+<p>
+  <strong>Autor:</strong>
+  <%= @event.autor %>
+</p>
+
+<p>
+  <strong>Privacidad:</strong>
+  <%= @event.privacidad %>
+</p>
+
+<p>
+  <strong>Fecha publicacion:</strong>
+  <%= @event.fecha_publicacion %>
+</p>
+
+<p>
+  <strong>Fecha evento:</strong>
+  <%= @event.fecha_evento %>
+</p>
+
+<p>
+  <strong>Distancia:</strong>
+  <%= @event.distancia %>
+</p>
+
+<p>
+  <strong>Duracion:</strong>
+  <%= @event.duracion %>
+</p>
+
+<p>
+  <strong>Asistentes:</strong>
+  <%= @event.asistentes %>
+</p>
+
+<p>
+  <strong>Tal ves:</strong>
+  <%= @event.tal_ves %>
+</p>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
