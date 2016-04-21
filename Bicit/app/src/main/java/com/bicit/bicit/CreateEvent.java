@@ -22,10 +22,13 @@ public class CreateEvent extends AppCompatActivity {
     public Button createEvent;
     public RadioGroup group;
     public EditText startDate;
-    public EditText endDate;
+    public EditText startTime;
+    public EditText description;
     public String name;
     public String sDate;
-    public String eDate;
+    public String sTime;
+    public String descript;
+
     public boolean isPrivate = false;
     //Lista donde se almacena la informacion del evento.
     public ArrayList<PlantillaEvento> plantilla = new ArrayList<>();
@@ -35,8 +38,9 @@ public class CreateEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         this.plantillaEvento = new PlantillaEvento();
+        this.description = (EditText)findViewById(R.id.description);
         this.startDate = (EditText)findViewById(R.id.startDate);
-        this.endDate = (EditText)findViewById(R.id.endDate);
+        this.startTime = (EditText)findViewById(R.id.startTime);
         this.rbPrivate = (RadioButton)findViewById(R.id.rbPrivate);
         this.rbPublic = (RadioButton)findViewById(R.id.rbPublic);
         this.eventName = (EditText)findViewById(R.id.eventName);
@@ -44,8 +48,9 @@ public class CreateEvent extends AppCompatActivity {
         this.createEvent = (Button)findViewById(R.id.btnCreate);
         this.group = (RadioGroup)findViewById(R.id.group);
         this.name = eventName.getText().toString();
-        this.eDate = endDate.getText().toString();
+        this.sTime = startTime.getText().toString();
         this.sDate = startDate.getText().toString();
+        this.descript = description.getText().toString();
         //Metodo donde se evalua que RadioButton esta seleccionado
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -64,8 +69,9 @@ public class CreateEvent extends AppCompatActivity {
     public void createEvent(View v ){
 
         plantillaEvento.nombreEvento = name;
-        plantillaEvento.fechaFinal = eDate;
+        plantillaEvento.horaInicio = sTime;
         plantillaEvento.fechaInicio = sDate;
+        plantillaEvento.descripcion = descript;
         if(isPrivate){
            plantillaEvento.eventoPrivado = true;
             plantillaEvento.eventoPublico = false;

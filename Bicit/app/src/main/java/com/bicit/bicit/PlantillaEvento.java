@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class PlantillaEvento {
     String nombreEvento;
     String fechaInicio;
-    String fechaFinal;
+    String horaInicio;
+    String descripcion;
     boolean eventoPublico;
     boolean eventoPrivado;
 
