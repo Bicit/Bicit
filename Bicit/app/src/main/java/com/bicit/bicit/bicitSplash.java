@@ -28,9 +28,9 @@ public class bicitSplash extends Activity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(bicitSplash.this,LoginActivity.class);
+                Intent mainIntent = new Intent(bicitSplash.this,EventosActivity.class);
                 bicitSplash.this.startActivity(mainIntent);
-                bicitSplash.this.finish();
+                finish();
             }
         }, SPLASH_DISPLAY_LENGHT);
     }

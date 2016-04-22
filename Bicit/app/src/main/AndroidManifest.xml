@@ -72,7 +72,7 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".Eventos"
+            android:name=".EventosActivity"
             android:label="@string/title_activity_eventos"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

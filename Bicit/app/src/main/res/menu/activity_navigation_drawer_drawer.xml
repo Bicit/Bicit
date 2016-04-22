@@ -5,11 +5,11 @@
         <item
             android:id="@+id/nav_maproute"
             android:icon="@drawable/ic_action_place"
-            android:title="Map" />
+            android:title="Mapa" />
         <item
             android:id="@+id/nav_events"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Events" />
+            android:title="Eventos" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
