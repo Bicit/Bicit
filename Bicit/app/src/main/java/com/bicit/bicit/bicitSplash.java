@@ -21,16 +21,16 @@ public class bicitSplash extends Activity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.layout);
+        setContentView(R.layout.activity_splashscreen);
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(bicitSplash.this,LoginActivity.class);
+                Intent mainIntent = new Intent(bicitSplash.this,EventosActivity.class);
                 bicitSplash.this.startActivity(mainIntent);
-                bicitSplash.this.finish();
+                finish();
             }
         }, SPLASH_DISPLAY_LENGHT);
     }

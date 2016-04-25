@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "OnSuccess", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this,Maproute.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override
@@ -58,8 +59,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClick(View v ){
-            Intent intent = new Intent(LoginActivity.this,Maproute.class);
-            startActivity(intent);
+        Intent intent = new Intent(LoginActivity.this,Maproute.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
