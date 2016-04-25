@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class CreateEvent extends AppCompatActivity {
     //Contiene los diferentes atributos que tiene la plantilla para crear el evento
-    public PlantillaEvento plantillaEvento;
+    public Evento plantillaEvento;
     public RadioButton rbPrivate;
     public RadioButton rbPublic;
     public EditText eventName;
@@ -28,16 +28,15 @@ public class CreateEvent extends AppCompatActivity {
     public String sDate;
     public String sTime;
     public String descript;
-
+    public DbController dbController;
     public boolean isPrivate = false;
-    //Lista donde se almacena la informacion del evento.
-    public ArrayList<PlantillaEvento> plantilla = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-        this.plantillaEvento = new PlantillaEvento();
+        this.dbController = new DbController();
+        this.plantillaEvento = new Evento();
         this.description = (EditText)findViewById(R.id.description);
         this.startDate = (EditText)findViewById(R.id.startDate);
         this.startTime = (EditText)findViewById(R.id.startTime);
@@ -79,7 +78,7 @@ public class CreateEvent extends AppCompatActivity {
             plantillaEvento.eventoPublico = true;
             plantillaEvento.eventoPrivado = false;
         }
-        plantilla.add(plantillaEvento);
+        dbController.db.add(plantillaEvento);
         //Intent intent = new Intent(this,Maproute.class);
         //startActivity(intent);
 

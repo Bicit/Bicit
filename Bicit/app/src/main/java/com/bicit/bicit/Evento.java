@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Felipe Montoya on 19/04/2016.
  */
-public class PlantillaEvento {
+public class Evento {
     String nombreEvento;
     String fechaInicio;
     String horaInicio;
