@@ -79,8 +79,10 @@ public class CreateEvent extends AppCompatActivity {
             plantillaEvento.eventoPrivado = false;
         }
         dbController.db.add(plantillaEvento);
-        //Intent intent = new Intent(this,Maproute.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this,EventosActivity.class);
+        startActivity(intent);
+        finish();
+
 
     }
 }

@@ -59,14 +59,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClick(View v ){
-<<<<<<< HEAD
-            Intent intent = new Intent(LoginActivity.this,CreateEvent.class);
-            startActivity(intent);
-=======
+
         Intent intent = new Intent(LoginActivity.this,Maproute.class);
         startActivity(intent);
         finish();
->>>>>>> develop
+
     }
 
     @Override
