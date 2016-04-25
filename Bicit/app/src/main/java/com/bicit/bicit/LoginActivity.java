@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onClick(View v ){
 
-        Intent intent = new Intent(LoginActivity.this,Maproute.class);
+        Intent intent = new Intent(LoginActivity.this,CreateEvent.class);
         startActivity(intent);
         finish();
 
