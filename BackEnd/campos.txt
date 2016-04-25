@@ -1,9 +1,0 @@
-Fecha de publicacion
-Fecha de evento
-Nombre
-Autor
-Privacidad
-Distancia
-Duracion
-Asistentes
-Tal ves
