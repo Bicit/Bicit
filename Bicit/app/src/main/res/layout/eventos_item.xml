@@ -4,58 +4,14 @@
     android:layout_height="match_parent"
     android:paddingLeft="20dp"
     android:paddingTop="5dp"
-    android:paddingRight="20dp">
+    android:paddingRight="20dp"
+    android:weightSum="1">
 
     <ListView
-        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:id="@+id/Info">
+        android:id="@+id/info_eventos" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-            android:text="@string/title"
-            android:id="@+id/Title"
-            android:ellipsize="end"
-            android:maxLines="3" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-            android:text="@string/description"
-            android:id="@+id/Description"
-            android:ellipsize="end"
-            android:maxLines="2" />
-    </ListView>
-
-    <ListView
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/Time"
-            android:layout_gravity="center_horizontal"
-            android:ellipsize="end" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/Date"
-            android:ellipsize="end" />
-    </ListView>
+    <!-- .xml Legacy por el momento-->
 
 </LinearLayout>

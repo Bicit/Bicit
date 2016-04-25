@@ -1,16 +1,17 @@
 package com.bicit.bicit;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -24,10 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-
-import java.util.ArrayList;
+import android.widget.ListView;
 
 public class EventosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -40,10 +38,11 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private String[]=
     /**
      * The {@link ViewPager} that will host the section contents.
      */
+
+    private ListView eventosAdapter;
     private ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +60,8 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        ArrayAdapter<String> eventosAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, myStringArray);
+        eventosAdapter = (ListView) findViewById(R.id.info_eventos);
+        //eventosAdapter.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, partido.getIntegrantes()));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +81,8 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         mViewPager.setBackgroundColor(Color.WHITE);
+
+
     }
 
 
@@ -110,22 +111,23 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class EventosTodosFragment extends ListFragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private Context context;
 
-        public PlaceholderFragment() {
+        public EventosTodosFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static EventosTodosFragment newInstance(int sectionNumber) {
+            EventosTodosFragment fragment = new EventosTodosFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -135,9 +137,9 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            context = container.getContext();
             View rootView = inflater.inflate(R.layout.fragment_eventos, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText("Hello World");
+            ListView listViewInfo = (ListView) rootView.findViewById(R.id.info_eventos);
             return rootView;
         }
     }
@@ -155,13 +157,13 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            // Return a EventosTodosFragment (defined as a static inner class below).
+            return EventosTodosFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 2 total pages.
             return 2;
         }
 
