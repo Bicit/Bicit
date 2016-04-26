@@ -1,6 +1,7 @@
 package com.bicit.bicit;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ public class adaptadorEventos<T> extends ArrayAdapter <T>{
         }
         TextView titulo = (TextView) listItemView.findViewById(android.R.id.text1);
         TextView subtitulo = (TextView) listItemView.findViewById(android.R.id.text2);
+        titulo.setTextColor(Color.BLACK);
+        subtitulo.setTextColor(Color.BLACK);
 
         T item = (T) getItem(position);
 

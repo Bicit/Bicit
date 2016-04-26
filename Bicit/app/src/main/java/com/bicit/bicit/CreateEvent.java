@@ -77,14 +77,14 @@ public class CreateEvent extends AppCompatActivity {
         int distancia=Integer.parseInt(this.distacia.getText().toString());
 
         Evento evento = new Evento(name,fechaInicio,fechaPublicacion,descripcion,privacidad,duracion,distancia);
-        dbController.db.add(evento);
-        Intent intent = new Intent(CreateEvent.this,EventosActivity.class);
-        startActivity(intent);
+        EventosActivity.eventos.add(evento);
+        Intent i = new Intent(this, EventosActivity.class);
+        this.startActivity(i);
         finish();
     }
 
     public String fechaHoraActual(){
-        //return new SimpleDateFormat( "yyyy_MM_dd", java.util.Locale.getDefault()).format(Calendar.getInstance() .getTime());
-        return "Test";
+        return new SimpleDateFormat( "yyyy/MM/dd", java.util.Locale.getDefault()).format(Calendar.getInstance() .getTime());
+        //return "Test";
     }
 }

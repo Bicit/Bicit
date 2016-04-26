@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,16 +37,19 @@ import javax.sql.DataSource;
 public class EventosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ListView listViewEvent;
+    public static final int eventoCode = 0;
     private ViewPager mViewPager;
-
-    private ArrayAdapter adapter;
+    public static ArrayList<Evento> eventos;
+    /*private ListView listViewEvent;
+    private ArrayAdapter adapter;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(EventosActivity.eventos == null){
+            EventosActivity.eventos = new ArrayList<>();
+        }
         setContentView(R.layout.activity_eventos);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -76,11 +80,11 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
 
 
         //Se crea el adaptador del listView, se le asigna y se inicializa la lista de eventos del controlador de la base de datos
-        listViewEvent = (ListView) findViewById(R.id.info_eventos);
+        /*listViewEvent = (ListView) findViewById(R.id.info_eventos);
         DbController.db = new ArrayList<>();
         adapter = new adaptadorEventos<Evento>(this, DbController.db);
 
-        listViewEvent.setAdapter(adapter);
+        listViewEvent.setAdapter(adapter);*/
 
     }
 
@@ -118,6 +122,9 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         private static final String ARG_SECTION_NUMBER = "section_number";
         private Context context;
 
+        private ListView listViewEvent;
+        public ArrayAdapter adapter;
+
         public EventosTodosFragment() {
         }
 
@@ -138,7 +145,18 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
                                  Bundle savedInstanceState) {
             context = container.getContext();
             View rootView = inflater.inflate(R.layout.fragment_eventos, container, false);
-            
+
+            listViewEvent = (ListView) rootView.findViewById(R.id.info_eventos);
+
+            adapter = new adaptadorEventos<Evento>(context, DbController.db);
+            listViewEvent.setAdapter(adapter);
+
+
+            adapter.clear();
+            for(int i =0; i < EventosActivity.eventos.size(); i++){
+                adapter.add(EventosActivity.eventos.get(i));
+            }
+
 
             return rootView;
         }
@@ -218,7 +236,8 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
 
     public void agregarEvento(View v){
         Intent nuevoEvento = new Intent(EventosActivity.this,CreateEvent.class);
-        EventosActivity.this.startActivity(nuevoEvento);
-        this.adapter.notifyDataSetChanged();
+        EventosActivity.this.startActivityForResult(nuevoEvento, eventoCode);
+        finish();
     }
+
 }

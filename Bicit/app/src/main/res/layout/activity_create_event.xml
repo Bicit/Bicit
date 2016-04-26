@@ -62,7 +62,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="AA MM DD" />
+                android:hint="AA/MM/DD" />
 
             <GridLayout
                 android:layout_width="match_parent"
