@@ -79,7 +79,7 @@ public class CreateEvent extends AppCompatActivity {
             plantillaEvento.eventoPrivado = false;
         }
         dbController.db.add(plantillaEvento);
-        Intent intent = new Intent(this,EventosActivity.class);
+        Intent intent = new Intent(CreateEvent.this,EventosActivity.class);
         startActivity(intent);
         finish();
 
