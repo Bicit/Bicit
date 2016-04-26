@@ -25,7 +25,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,8 +45,8 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-
-    private ListView eventosAdapter;
+    private DbController db;
+    private ListView listViewEvent;
     private ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +64,16 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        eventosAdapter = (ListView) findViewById(R.id.info_eventos);
+        listViewEvent = (ListView) findViewById(R.id.info_eventos);
+        List<String> db = new ArrayList<String>();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                db );
+
+        //listViewEvent.setAdapter(arrayAdapter);
+
+
         //eventosAdapter.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, partido.getIntegrantes()));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
