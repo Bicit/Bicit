@@ -54,6 +54,6 @@ public class Evento {
 
     @Override
     public String toString(){
-        return this.nombreEvento+","+" Fecha: "+this.fechaInicio+"   |   duracion: "+this.duracion+" horas" + "   |   Fecha publicacion: "+this.fechaPublicacion;
+        return this.nombreEvento+","+" Fecha: "+this.fechaInicio+"   |   Duracion: "+this.duracion+" horas" + "   |   Fecha publicacion: "+this.fechaPublicacion;
     }
 }
