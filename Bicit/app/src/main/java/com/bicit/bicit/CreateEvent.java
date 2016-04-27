@@ -10,46 +10,43 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CreateEvent extends AppCompatActivity {
     //Contiene los diferentes atributos que tiene la plantilla para crear el evento
-    public Evento plantillaEvento;
-    public RadioButton rbPrivate;
-    public RadioButton rbPublic;
-    public EditText eventName;
-    public Button importKml;
-    public Button createEvent;
-    public RadioGroup group;
-    public EditText startDate;
-    public EditText startTime;
-    public EditText description;
-    public String name;
-    public String sDate;
-    public String sTime;
-    public String descript;
-    public DbController dbController;
-    public boolean isPrivate = false;
+    private RadioButton rbPrivate;
+    private RadioButton rbPublic;
+    private EditText eventName;
+    private Button importKml;
+    private Button createEvent;
+    private RadioGroup group;
+    private EditText startDate;
+    private EditText description;
+    private EditText distacia;
+    private EditText duracion;
+    private DbController dbController;
+    private boolean isPrivate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+
         this.dbController = new DbController();
-        this.plantillaEvento = new Evento();
         this.description = (EditText)findViewById(R.id.description);
         this.startDate = (EditText)findViewById(R.id.startDate);
-        this.startTime = (EditText)findViewById(R.id.startTime);
         this.rbPrivate = (RadioButton)findViewById(R.id.rbPrivate);
         this.rbPublic = (RadioButton)findViewById(R.id.rbPublic);
         this.eventName = (EditText)findViewById(R.id.eventName);
         this.importKml = (Button)findViewById(R.id.btnMap);
         this.createEvent = (Button)findViewById(R.id.btnCreate);
         this.group = (RadioGroup)findViewById(R.id.group);
-        this.name = eventName.getText().toString();
-        this.sTime = startTime.getText().toString();
-        this.sDate = startDate.getText().toString();
-        this.descript = description.getText().toString();
+        this.distacia = (EditText)findViewById(R.id.txtDistancia);
+        this.duracion = (EditText) findViewById(R.id.txtDuracion);
+
         //Metodo donde se evalua que RadioButton esta seleccionado
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -67,22 +64,26 @@ public class CreateEvent extends AppCompatActivity {
 
     public void createEvent(View v ){
 
-        plantillaEvento.nombreEvento = name;
-        plantillaEvento.horaInicio = sTime;
-        plantillaEvento.fechaInicio = sDate;
-        plantillaEvento.descripcion = descript;
-        if(isPrivate){
-           plantillaEvento.eventoPrivado = true;
-            plantillaEvento.eventoPublico = false;
-        }else{
-            plantillaEvento.eventoPublico = true;
-            plantillaEvento.eventoPrivado = false;
-        }
-        dbController.db.add(plantillaEvento);
+        //Se reciben los datos de los campos
+        String name=this.eventName.getText().toString();
+        String fechaInicio=this.startDate.getText().toString();
+        String fechaPublicacion=fechaHoraActual();
+        String descripcion=this.description.getText().toString();
+        String privacidad;
+        //Se evalua el check de privacidad
+        if(this.isPrivate) privacidad = "Privado";
+        else privacidad = "Publico";
+        int duracion=Integer.parseInt(this.duracion.getText().toString());
+        int distancia=Integer.parseInt(this.distacia.getText().toString());
+
+        Evento evento = new Evento(name,fechaInicio,fechaPublicacion,descripcion,privacidad,duracion,distancia);
+        dbController.db.add(evento);
         Intent intent = new Intent(CreateEvent.this,EventosActivity.class);
         startActivity(intent);
         finish();
+    }
 
-
+    public String fechaHoraActual(){
+        return new SimpleDateFormat( "yyyy_MM_dd", java.util.Locale.getDefault()).format(Calendar.getInstance() .getTime());
     }
 }

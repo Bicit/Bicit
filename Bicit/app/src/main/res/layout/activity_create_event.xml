@@ -6,86 +6,133 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <TextView
-        android:id="@+id/txtVName"
-        android:text="@string/eventName"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="normal"
-        android:textSize="20dp"
+        android:id="@+id/scrollView"
+        android:layout_weight="6.10">
 
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/eventName"
-        android:text="@string/eEvent"
-        />
-    <RadioGroup
-        android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:id="@+id/rbPrivate"
-            android:text="Privado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbPublic"
-            android:text="Publico"/>
-    </RadioGroup>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txStart"
-        android:textSize="20dp"
-        android:text="Fecha de Inicio"/>
-    <EditText
-        android:id="@+id/startDate"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:text="DD/MM/AA"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txEnd"
-        android:textSize="20dp"
-        android:text="Hora de Inicio"/>
-    <EditText
-        android:id="@+id/startTime"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:text="00:00"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/Descrip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Descripción del evento"/>
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="Describa el Evento"
-        />
-    <Button
-        android:id="@+id/btnMap"
-        android:text="@string/btMap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-    <Button
-        android:id="@+id/btnCreate"
-        android:text="Crear Evento"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:onClick="createEvent"/>
+            <TextView
+                android:id="@+id/txtVName"
+                android:text="@string/eventName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="20dp"
+
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/eventName"
+                android:text="@string/eEvent"
+                />
+
+            <RadioGroup
+                android:id="@+id/group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/rbPrivate"
+                    android:text="Privado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rbPublic"
+                    android:text="Publico"/>
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txStart"
+                android:textSize="20dp"
+                android:text="Fecha de Inicio"/>
+
+            <EditText
+                android:id="@+id/startDate"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:hint="AA MM DD" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="82dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txEnd"
+                    android:textSize="20dp"
+                    android:text="Distancia"
+                    android:layout_row="0"
+                    android:layout_column="0" />
+
+                <EditText
+                    android:id="@+id/txtDistancia"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="time"
+                    android:hint="Km"
+                    android:layout_row="1"
+                    android:layout_column="0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView2"
+                    android:textSize="20dp"
+                    android:text="Duracion"
+                    android:layout_row="0"
+                    android:layout_column="2" />
+
+                <EditText
+                    android:id="@+id/txtDuracion"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="time"
+                    android:hint="Horas"
+                    android:layout_row="1"
+                    android:layout_column="2" />
+            </GridLayout>
+
+            <TextView
+                android:id="@+id/Descrip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Descripción del evento"/>
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+            <Button
+                android:id="@+id/btnMap"
+                android:text="@string/btMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:id="@+id/btnCreate"
+                android:text="Crear Evento"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:onClick="createEvent"/>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

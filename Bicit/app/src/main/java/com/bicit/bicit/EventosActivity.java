@@ -227,4 +227,9 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void agregarEvento(View v){
+        Intent nuevoEvento = new Intent(EventosActivity.this,CreateEvent.class);
+        EventosActivity.this.startActivity(nuevoEvento);
+    }
 }
