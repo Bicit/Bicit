@@ -31,22 +31,16 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 public class EventosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ListView listViewEvent;
     private ViewPager mViewPager;
+
+    private ArrayAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,27 +48,12 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        listViewEvent = (ListView) findViewById(R.id.info_eventos);
-        DbController.db = new ArrayList<>();
-        ArrayAdapter<Evento> arrayAdapter = new ArrayAdapter<Evento>(
-                this,
-                android.R.layout.simple_list_item_1,
-                DbController.db );
-
-        //listViewEvent.setAdapter(arrayAdapter);
-
-
-        //eventosAdapter.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, partido.getIntegrantes()));
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +73,14 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         tabLayout.setupWithViewPager(mViewPager);
         mViewPager.setBackgroundColor(Color.WHITE);
 
+
+
+        //Se crea el adaptador del listView, se le asigna y se inicializa la lista de eventos del controlador de la base de datos
+        listViewEvent = (ListView) findViewById(R.id.info_eventos);
+        DbController.db = new ArrayList<>();
+        adapter = new adaptadorEventos<Evento>(this, DbController.db);
+
+        listViewEvent.setAdapter(adapter);
 
     }
 
@@ -230,5 +217,6 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
     public void agregarEvento(View v){
         Intent nuevoEvento = new Intent(EventosActivity.this,CreateEvent.class);
         EventosActivity.this.startActivity(nuevoEvento);
+        this.adapter.notifyDataSetChanged();
     }
 }

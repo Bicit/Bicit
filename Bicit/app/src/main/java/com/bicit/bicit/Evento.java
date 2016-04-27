@@ -51,4 +51,9 @@ public class Evento {
     public int getDistancia() {
         return distancia;
     }
+
+    @Override
+    public String toString(){
+        return this.nombreEvento+","+"Fecha: "+this.fechaInicio+" duracion: "+this.duracion;
+    }
 }
