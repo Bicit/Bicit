@@ -45,7 +45,6 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private DbController db;
     private ListView listViewEvent;
     private ViewPager mViewPager;
     @Override
@@ -65,11 +64,11 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         toggle.syncState();
 
         listViewEvent = (ListView) findViewById(R.id.info_eventos);
-        List<String> db = new ArrayList<String>();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        DbController.db = new ArrayList<>();
+        ArrayAdapter<Evento> arrayAdapter = new ArrayAdapter<Evento>(
                 this,
                 android.R.layout.simple_list_item_1,
-                db );
+                DbController.db );
 
         //listViewEvent.setAdapter(arrayAdapter);
 

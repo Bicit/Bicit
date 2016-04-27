@@ -84,6 +84,7 @@ public class CreateEvent extends AppCompatActivity {
     }
 
     public String fechaHoraActual(){
-        return new SimpleDateFormat( "yyyy_MM_dd", java.util.Locale.getDefault()).format(Calendar.getInstance() .getTime());
+        //return new SimpleDateFormat( "yyyy_MM_dd", java.util.Locale.getDefault()).format(Calendar.getInstance() .getTime());
+        return "Test";
     }
 }

@@ -31,8 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/eventName"
-                android:text="@string/eEvent"
-                />
+                android:hint="@string/eEvent" />
 
             <RadioGroup
                 android:id="@+id/group"
@@ -62,7 +61,7 @@
                 android:id="@+id/startDate"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:inputType="date"
+                android:inputType="text"
                 android:hint="AA MM DD" />
 
             <GridLayout
