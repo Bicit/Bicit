@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LytContenedor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/fotoPerfil"
+        android:layout_gravity="left"
+        android:src="@drawable/fotoperfil"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Nombre Evento"
+        android:id="@+id/nombreDespliegue"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Fecha"
+        android:id="@+id/fechaDesplieuge"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Hora del evento:"
+        android:id="@+id/hora" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="12:00"
+        android:id="@+id/horaDespliegue" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:id="@+id/personasInscritas"
+        android:text="Participantes:"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:id="@+id/numeroPersonas"
+        android:text="20"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Descripción:"
+        android:id="@+id/descripcion"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Aquí va la decripción"
+        android:id="@+id/descDespliegue"/>
+
+</LinearLayout>
