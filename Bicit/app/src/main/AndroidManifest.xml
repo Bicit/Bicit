@@ -71,11 +71,12 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".CreateEvent"></activity>
+        <activity android:name=".CreateEvent" />
         <activity
             android:name=".EventosActivity"
             android:label="@string/title_activity_eventos"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".DespliegueEvento"></activity>
     </application>
 
 </manifest>
