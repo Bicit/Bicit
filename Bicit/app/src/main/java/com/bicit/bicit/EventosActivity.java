@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -85,9 +86,7 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         adapter = new adaptadorEventos<Evento>(this, DbController.db);
 
         listViewEvent.setAdapter(adapter);*/
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -147,7 +146,6 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
             View rootView = inflater.inflate(R.layout.fragment_eventos, container, false);
 
             listViewEvent = (ListView) rootView.findViewById(R.id.info_eventos);
-
             adapter = new adaptadorEventos<Evento>(context, DbController.db);
             listViewEvent.setAdapter(adapter);
 
@@ -156,9 +154,16 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
             for(int i =0; i < EventosActivity.eventos.size(); i++){
                 adapter.add(EventosActivity.eventos.get(i));
             }
-
-
             return rootView;
+        }
+
+        @Override
+        public void onListItemClick(ListView l, View v, int position, long id) {
+            Intent intent = new Intent();
+            intent.setClass(getContext(), DespliegueEvento.class);
+            intent.putExtra("position", position);
+            intent.putExtra("id", id);
+            startActivity(intent);
         }
     }
 

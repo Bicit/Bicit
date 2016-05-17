@@ -8,7 +8,7 @@
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="150dp"
+        android:layout_width="fill_parent"
         android:layout_height="150dp"
         android:id="@+id/fotoPerfil"
         android:layout_gravity="left"
@@ -20,50 +20,114 @@
         android:textSize="20dp"
         android:text="Nombre Evento"
         android:id="@+id/nombreDespliegue"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Fecha"
-        android:id="@+id/fechaDesplieuge"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Hora del evento:"
-        android:id="@+id/hora" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="12:00"
-        android:id="@+id/horaDespliegue" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:id="@+id/personasInscritas"
-        android:text="Participantes:"/>
+        android:paddingLeft="5dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:id="@+id/numeroPersonas"
-        android:text="20"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Fecha"
+            android:id="@+id/fechaDesplieuge"
+            android:paddingRight="60dp"
+            android:paddingLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Hora:"
+            android:id="@+id/hora"
+            android:paddingLeft="50dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="12:00"
+            android:id="@+id/horaDespliegue"
+            android:paddingLeft="3dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:id="@+id/personasInscritas"
+            android:text="Participantes:"
+            android:paddingLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:id="@+id/numeroPersonas"
+            android:text="20"
+            android:paddingLeft="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:id="@+id/textView3"
+            android:text="Quizas:"
+            android:paddingLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:id="@+id/textView4"
+            android:text="45"
+            android:paddingLeft="5dp" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:text="Descripción:"
         android:id="@+id/descripcion"
-        />
+        android:paddingLeft="5dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:text="Aquí va la decripción"
-        android:id="@+id/descDespliegue"/>
+        android:id="@+id/descDespliegue"
+        android:paddingLeft="5dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:paddingTop="10dp">
+        <fragment
+            android:id="@+id/map"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            tools:context=".maproute"
+            android:layout_gravity="bottom" />
+    </LinearLayout>
 
 </LinearLayout>
