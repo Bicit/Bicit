@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -29,27 +28,47 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 
-import javax.sql.DataSource;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class EventosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     public static final int eventoCode = 0;
     private ViewPager mViewPager;
-    public static ArrayList<Evento> eventos;
-    /*private ListView listViewEvent;
-    private ArrayAdapter adapter;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(EventosActivity.eventos == null){
-            EventosActivity.eventos = new ArrayList<>();
-        }
         setContentView(R.layout.activity_eventos);
+        //Boton para la creacion de un nuevo evento
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EventosActivity.this,CreateEvent.class);
+                startActivity(intent);
+            }
+        });
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setBackgroundColor(Color.WHITE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,29 +81,6 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(EventosActivity.this,CreateEvent.class);
-                startActivity(intent);
-            }
-        });
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-        mViewPager.setBackgroundColor(Color.WHITE);
-
-
-
         //Se crea el adaptador del listView, se le asigna y se inicializa la lista de eventos del controlador de la base de datos
         /*listViewEvent = (ListView) findViewById(R.id.info_eventos);
         DbController.db = new ArrayList<>();
@@ -120,6 +116,7 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
     /**
      * A placeholder fragment containing a simple view.
      */
+
     public static class EventosTodosFragment extends ListFragment {
         /**
          * The fragment argument representing the section number for this
@@ -130,6 +127,9 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
 
         private ListView listViewEvent;
         public ArrayAdapter adapter;
+
+        private VolleyS volleyS;
+        private RequestQueue colaVolley;
 
         public EventosTodosFragment() {
         }
@@ -152,20 +152,68 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
             context = container.getContext();
             View rootView = inflater.inflate(R.layout.fragment_eventos, container, false);
 
+            volleyS = VolleyS.getInstance(getActivity().getApplicationContext());
+            colaVolley = volleyS.getColaRequest();
+
             listViewEvent = (ListView) rootView.findViewById(R.id.info_eventos);
 
-            adapter = new adaptadorEventos<Evento>(context, DbController.db);
+            adapter = new adaptadorEventos<Evento>(context, new ArrayList<Evento>());
             listViewEvent.setAdapter(adapter);
-
-
             adapter.clear();
-            for(int i =0; i < EventosActivity.eventos.size(); i++){
-                adapter.add(EventosActivity.eventos.get(i));
-            }
 
 
             return rootView;
         }
+        public void agregarACola(Request request){
+            if(request != null){
+                request.setTag(this);
+                if(colaVolley == null){
+                    colaVolley = volleyS.getColaRequest();
+                }
+                request.setRetryPolicy(new DefaultRetryPolicy(60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            }
+        }
+
+        public void onPreStartConnection() {
+            getActivity().setProgressBarIndeterminateVisibility(true);
+        }
+
+        public void onConnectionFinished() {
+            getActivity().setProgressBarIndeterminateVisibility(false);
+        }
+
+        public void onConnectionFailed(String error) {
+            getActivity().setProgressBarIndeterminateVisibility(false);
+            Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+        }
+
+        private void makeRequest(){
+            String url = "https://bicits.herokuapp.com/events.json";
+            JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray jsonArray) {
+                    for(int i=0; i<jsonArray.length(); i++){
+                        try {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            Evento nuevoEvento = new Evento(jsonObject);
+                            adapter.add(nuevoEvento);
+                            adapter.notify();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    onConnectionFinished();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    onConnectionFailed(volleyError.toString());
+                }
+            });
+            agregarACola(request);
+        }
+
+
     }
 
     /**
@@ -226,7 +274,9 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         } else if (id == R.id.nav_events) {
 
         } else if (id == R.id.nav_slideshow) {
-
+            Intent intent = new Intent(EventosActivity.this, CreateEvent.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -238,12 +288,6 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public void agregarEvento(View v){
-        Intent nuevoEvento = new Intent(EventosActivity.this,CreateEvent.class);
-        EventosActivity.this.startActivityForResult(nuevoEvento, eventoCode);
-        finish();
     }
 
 }

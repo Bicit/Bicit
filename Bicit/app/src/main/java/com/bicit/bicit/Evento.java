@@ -1,5 +1,7 @@
 package com.bicit.bicit;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -22,6 +24,16 @@ public class Evento {
         this.privacidad = privacidad;
         this.duracion = duracion;
         this.distancia = distancia;
+    }
+
+    public Evento(JSONObject eventoJson){
+        this.nombreEvento = eventoJson.optString("nombre").toString();
+        this.fechaInicio = eventoJson.optString("autor").toString();
+        this.fechaPublicacion = eventoJson.optString("fecha_publicacion").toString();
+        this.descripcion = eventoJson.optString("descripcion");
+        this.privacidad = eventoJson.optString("privacidad");
+        this.duracion = Integer.parseInt(eventoJson.optString("duracion").toString());
+        this.distancia = Integer.parseInt(eventoJson.optString("distancia").toString());
     }
 
     public String getNombreEvento() {

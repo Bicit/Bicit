@@ -77,9 +77,7 @@ public class CreateEvent extends AppCompatActivity {
         int distancia=Integer.parseInt(this.distacia.getText().toString());
 
         Evento evento = new Evento(name,fechaInicio,fechaPublicacion,descripcion,privacidad,duracion,distancia);
-        EventosActivity.eventos.add(evento);
-        Intent i = new Intent(this, EventosActivity.class);
-        this.startActivity(i);
+        DbController.obtenerControlador().agregarEvento(evento);
         finish();
     }
 
