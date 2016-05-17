@@ -80,6 +80,10 @@
             android:name=".EventosListar"
             android:label="@string/title_activity_eventos_listar"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".DespliegueEvento"
+            android:label="@string/title_activity_despliegue_evento"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

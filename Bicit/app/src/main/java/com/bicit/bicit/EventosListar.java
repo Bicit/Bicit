@@ -3,6 +3,7 @@ package com.bicit.bicit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -38,7 +41,7 @@ public class EventosListar extends AppCompatActivity
 
     //Elementos para la lista de eventos
     private ListView listaEventos;
-    private AdaptadorLista<Evento> adaptador;
+    private AdaptadorCustomLista adaptador;
     private ArrayList<Evento> eventos;
 
     //Codigo de respuesta a la creacion de eventos
@@ -75,13 +78,25 @@ public class EventosListar extends AppCompatActivity
         //Se instancia la lista de los eventos y su adaptador
         this.eventos = new ArrayList<>();
         this.listaEventos = (ListView) findViewById(R.id.listaEventos);
-        this.adaptador = new AdaptadorLista<>(this, eventos);
+        this.adaptador = new AdaptadorCustomLista(this, eventos);
         listaEventos.setAdapter(adaptador);
+
+        //Se cambia el comportamiento de la lista al seleccionar un item
+        this.listaEventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Evento evento = (Evento) adaptador.getItem(position);
+                Intent i = new Intent(EventosListar.this, DespliegueEvento.class);
+                i.putExtra("url", evento.getUrl());
+                startActivity(i);
+            }
+        });
 
         //Se instancian los objetos volley para la comunicacion con el servidor
         volley = VolleyS.getInstance(this.getApplicationContext());
         colaRequest = volley.getColaRequest();
         solicitarEventos();
+        Toast.makeText(getApplicationContext(),"Cargando...", Toast.LENGTH_LONG);
     }
 
     //Metodos para la sincronizacion con volley

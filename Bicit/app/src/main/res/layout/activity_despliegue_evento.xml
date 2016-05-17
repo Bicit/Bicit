@@ -11,7 +11,6 @@
         android:layout_width="fill_parent"
         android:layout_height="150dp"
         android:id="@+id/fotoPerfil"
-        android:layout_gravity="left"
         android:src="@drawable/fotoperfil"/>
 
     <TextView
@@ -20,7 +19,8 @@
         android:textSize="20dp"
         android:text="Nombre Evento"
         android:id="@+id/nombreDespliegue"
-        android:paddingLeft="5dp" />
+        android:paddingLeft="5dp"
+        android:layout_gravity="center_horizontal" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -41,16 +41,8 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:text="Hora:"
-            android:id="@+id/hora"
-            android:paddingLeft="50dp" />
+            android:id="@+id/fechaTV" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="12:00"
-            android:id="@+id/horaDespliegue"
-            android:paddingLeft="3dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -58,22 +50,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:id="@+id/personasInscritas"
-            android:text="Participantes:"
-            android:paddingLeft="5dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:id="@+id/numeroPersonas"
-            android:text="20"
-            android:paddingLeft="5dp" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Descripción:"
+        android:id="@+id/descripcion"
+        android:paddingLeft="5dp"
+        android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Aquí va la decripción"
+        android:id="@+id/descripcionTV"
+        android:paddingLeft="5dp"
+        android:textColor="#bbb8b8" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -92,25 +86,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:id="@+id/textView4"
+            android:id="@+id/quizaTV"
             android:text="45"
             android:paddingLeft="5dp" />
-    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Descripción:"
-        android:id="@+id/descripcion"
-        android:paddingLeft="5dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Aquí va la decripción"
-        android:id="@+id/descDespliegue"
-        android:paddingLeft="5dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="                          "
+            android:id="@+id/textView4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:id="@+id/personasInscritas"
+            android:text="Participantes:"
+            android:paddingLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:id="@+id/participantesTV"
+            android:text="20"
+            android:paddingLeft="5dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"

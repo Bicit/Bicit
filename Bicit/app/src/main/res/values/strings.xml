@@ -22,6 +22,7 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="title_activity_eventos_listar">EventosListar</string>
+    <string name="title_activity_despliegue_evento">DespliegueEvento</string>
     <string name="fecha_de_inicio">Fecha de Inicio</string>
     <string name="descripci_n_del_evento">Descripción del evento</string>
     <string name="crear_evento">Crear Evento</string>

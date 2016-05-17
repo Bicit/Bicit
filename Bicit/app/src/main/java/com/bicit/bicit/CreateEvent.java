@@ -95,8 +95,9 @@ public class CreateEvent extends AppCompatActivity {
         int duracion=Integer.parseInt(this.duracion.getText().toString());
         int distancia=Integer.parseInt(this.distacia.getText().toString());
 
-        Evento evento = new Evento(name,fechaInicio,fechaPublicacion,descripcion,privacidad,duracion,distancia);
+        Evento evento = new Evento(name,fechaInicio,fechaPublicacion,descripcion,privacidad,duracion,distancia, 0, 0, "");
         agregarEvento(evento);
+        Toast.makeText(getApplicationContext(), "Enviando...", Toast.LENGTH_SHORT);
     }
 
     public void addToQueue(Request request) {
@@ -121,10 +122,9 @@ public class CreateEvent extends AppCompatActivity {
         parametros.put("fecha_evento", evento.getFechaInicio());
         parametros.put("distancia", Integer.toString(evento.getDistancia()));
         parametros.put("duracion", Integer.toString(evento.getDuracion()));
-        parametros.put("asistentes", Integer.toString(0));
-        parametros.put("tal_ves", Integer.toString(0));
+        parametros.put("asistentes", Integer.toString(evento.getParticipantes()));
+        parametros.put("tal_ves", Integer.toString(evento.getQuizas()));
         parametros.put("descripcion", evento.getDescripcion());
-        System.out.println("Se agrega");
         JSONObject eventoJson = new JSONObject(parametros);
         JsonObjectRequest request = new JsonObjectRequest(url, eventoJson, new Response.Listener<JSONObject>() {
             @Override

@@ -13,10 +13,13 @@ public class Evento {
     private final String fechaPublicacion;
     private final String descripcion;
     private final String privacidad;
+    private final String url;
     private final int duracion;
     private final int distancia;
+    private int participantes;
+    private int quizas;
 
-    public Evento(String nombreEvento, String fechaInicio, String fechaPublicacion, String descripcion, String privacidad, int duracion, int distancia){
+    public Evento(String nombreEvento, String fechaInicio, String fechaPublicacion, String descripcion, String privacidad, int duracion, int distancia, int participantes, int quizas, String url){
         this.nombreEvento = nombreEvento;
         this.fechaInicio = fechaInicio;
         this.fechaPublicacion = fechaPublicacion;
@@ -24,9 +27,25 @@ public class Evento {
         this.privacidad = privacidad;
         this.duracion = duracion;
         this.distancia = distancia;
+        this.participantes = participantes;
+        this.quizas= quizas;
+        this.url = url;
     }
 
     public Evento(JSONObject eventoJson){
+        this.nombreEvento = eventoJson.optString("nombre").toString();
+        this.fechaInicio = eventoJson.optString("fecha_evento").toString();
+        this.fechaPublicacion = eventoJson.optString("fecha_publicacion").toString();
+        this.descripcion = eventoJson.optString("descripcion");
+        this.privacidad = eventoJson.optString("privacidad");
+        this.duracion = (int)Float.parseFloat(eventoJson.optString("duracion").toString());
+        this.distancia = (int)Float.parseFloat(eventoJson.optString("distancia").toString());
+        this.participantes = (int)Float.parseFloat(eventoJson.optString("asistentes").toString());
+        this.quizas = (int)Float.parseFloat(eventoJson.optString("tal_ves").toString());
+        this.url = eventoJson.optString("url");
+    }
+
+    public Evento(JSONObject eventoJson, String url){
         this.nombreEvento = eventoJson.optString("nombre").toString();
         this.fechaInicio = eventoJson.optString("autor").toString();
         this.fechaPublicacion = eventoJson.optString("fecha_publicacion").toString();
@@ -34,6 +53,9 @@ public class Evento {
         this.privacidad = eventoJson.optString("privacidad");
         this.duracion = (int)Float.parseFloat(eventoJson.optString("duracion").toString());
         this.distancia = (int)Float.parseFloat(eventoJson.optString("distancia").toString());
+        this.participantes = (int)Float.parseFloat(eventoJson.optString("participantes").toString());
+        this.quizas = (int)Float.parseFloat(eventoJson.optString("tal_ves").toString());
+        this.url = url;
     }
 
     public String getNombreEvento() {
@@ -62,6 +84,18 @@ public class Evento {
 
     public int getDistancia() {
         return distancia;
+    }
+
+    public int getParticipantes() {
+        return participantes;
+    }
+
+    public int getQuizas() {
+        return quizas;
+    }
+
+    public String getUrl() {
+        return this.url;
     }
 
     @Override

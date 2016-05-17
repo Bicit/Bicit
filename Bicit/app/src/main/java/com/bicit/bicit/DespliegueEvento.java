@@ -8,16 +8,41 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.appdatasearch.GetRecentContextCall;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCallback{
 
     private GoogleMap mMap;
+
+    //Objetos para la conexion la servidor
+    private VolleyS volley;
+    private RequestQueue colaRequest;
+
+    //Elementos de la interfaz de usuario a modificar
+    private TextView txtNombre;
+    private TextView txtFecha;
+    private TextView txtQuiza;
+    private TextView txtParticipantes;
+    private TextView txtDescripcion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +53,20 @@ public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCal
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //Se intancian los elementos de la interfaz de usuario
+        txtNombre = (TextView) findViewById(R.id.nombreDespliegue);
+        txtFecha = (TextView) findViewById(R.id.fechaTV);
+        txtQuiza = (TextView) findViewById(R.id.quizaTV);
+        txtParticipantes = (TextView) findViewById(R.id.participantesTV);
+        txtDescripcion = (TextView) findViewById(R.id.descripcionTV);
+
+        volley = VolleyS.getInstance(this.getApplicationContext());
+        colaRequest = volley.getColaRequest();
+
+        //Capturar la url enviada
+        String urlEvento = this.getIntent().getStringExtra("url");
+        crearEvento(urlEvento);
     }
 
     /**
@@ -66,5 +105,48 @@ public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCal
 
         Mapa controladorMapa = new Mapa(R.raw.ciclorutasmap, mMap, location, getApplicationContext());
         mMap = controladorMapa.cargarMapa();
+    }
+
+    //Metodo que crea un evento a partir de una direccion url
+    public void crearEvento(String url)
+    {
+        JsonObjectRequest request = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>(){
+
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println("hay respuesta");
+                Evento evento = new Evento(response);
+                desplegarEvento(evento);
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.getMessage());
+            }
+        });
+        addToQueue(request);
+    }
+
+    //Metodos para la sincronizacion con volley
+    public void addToQueue(Request request) {
+        if (request != null) {
+            request.setTag(this);
+            if (colaRequest == null)
+                colaRequest = volley.getColaRequest();
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                    60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+            colaRequest.add(request);
+        }
+    }
+
+    //Metodo para desplegar un objeto
+    public void desplegarEvento(Evento evento){
+        this.txtNombre.setText(evento.getNombreEvento());
+        this.txtFecha.setText(evento.getFechaInicio());
+        this.txtParticipantes.setText(Integer.toString(evento.getParticipantes()));
+        this.txtQuiza.setText(Integer.toString(evento.getQuizas()));
+        this.txtDescripcion.setText(evento.getDescripcion());
     }
 }
