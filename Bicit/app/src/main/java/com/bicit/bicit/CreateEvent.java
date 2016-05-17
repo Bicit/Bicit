@@ -98,6 +98,7 @@ public class CreateEvent extends AppCompatActivity {
         Evento evento = new Evento(name,fechaInicio,fechaPublicacion,descripcion,privacidad,duracion,distancia, 0, 0, "");
         agregarEvento(evento);
         Toast.makeText(getApplicationContext(), "Enviando...", Toast.LENGTH_SHORT);
+
     }
 
     public void addToQueue(Request request) {
