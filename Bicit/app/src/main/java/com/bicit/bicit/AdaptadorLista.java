@@ -13,9 +13,9 @@ import java.util.List;
 /**
  * Created by jgavi on 27/04/2016.
  */
-public class adaptadorEventos<T> extends ArrayAdapter <T>{
+public class AdaptadorLista<T> extends ArrayAdapter <T>{
 
-    public adaptadorEventos(Context context, List<T> objects) {
+    public AdaptadorLista(Context context, List<T> objects) {
         super(context, 0, objects);
     }
 

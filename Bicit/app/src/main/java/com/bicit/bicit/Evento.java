@@ -32,8 +32,8 @@ public class Evento {
         this.fechaPublicacion = eventoJson.optString("fecha_publicacion").toString();
         this.descripcion = eventoJson.optString("descripcion");
         this.privacidad = eventoJson.optString("privacidad");
-        this.duracion = Integer.parseInt(eventoJson.optString("duracion").toString());
-        this.distancia = Integer.parseInt(eventoJson.optString("distancia").toString());
+        this.duracion = (int)Float.parseFloat(eventoJson.optString("duracion").toString());
+        this.distancia = (int)Float.parseFloat(eventoJson.optString("distancia").toString());
     }
 
     public String getNombreEvento() {

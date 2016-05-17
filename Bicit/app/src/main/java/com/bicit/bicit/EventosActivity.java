@@ -81,12 +81,6 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //Se crea el adaptador del listView, se le asigna y se inicializa la lista de eventos del controlador de la base de datos
-        /*listViewEvent = (ListView) findViewById(R.id.info_eventos);
-        DbController.db = new ArrayList<>();
-        adapter = new adaptadorEventos<Evento>(this, DbController.db);
-
-        listViewEvent.setAdapter(adapter);*/
 
     }
 
@@ -157,22 +151,25 @@ public class EventosActivity extends AppCompatActivity implements NavigationView
 
             listViewEvent = (ListView) rootView.findViewById(R.id.info_eventos);
 
-            adapter = new adaptadorEventos<Evento>(context, new ArrayList<Evento>());
+            adapter = new AdaptadorLista<Evento>(context, new ArrayList<Evento>());
             listViewEvent.setAdapter(adapter);
             adapter.clear();
-
+            makeRequest();
 
             return rootView;
         }
+
         public void agregarACola(Request request){
             if(request != null){
                 request.setTag(this);
                 if(colaVolley == null){
                     colaVolley = volleyS.getColaRequest();
                 }
+                onPreStartConnection();
                 request.setRetryPolicy(new DefaultRetryPolicy(60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             }
         }
+
 
         public void onPreStartConnection() {
             getActivity().setProgressBarIndeterminateVisibility(true);

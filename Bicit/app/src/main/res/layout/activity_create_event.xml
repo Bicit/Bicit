@@ -15,7 +15,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/txtVName"
@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="normal"
-                android:textSize="20dp"
+                android:textSize="20sp"
 
                 />
 
@@ -54,8 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txStart"
-                android:textSize="20dp"
-                android:text="Fecha de Inicio"/>
+                android:textSize="20sp"
+                android:text="@string/fecha_de_inicio"/>
 
             <EditText
                 android:id="@+id/startDate"
@@ -109,13 +109,14 @@
                 android:id="@+id/Descrip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="Descripción del evento"/>
+                android:textSize="20sp"
+                android:text="@string/descripci_n_del_evento"/>
 
             <EditText
                 android:id="@+id/description"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_height="100dp"
+                android:inputType="textMultiLine" />
 
             <Button
                 android:id="@+id/btnMap"
@@ -126,7 +127,7 @@
 
             <Button
                 android:id="@+id/btnCreate"
-                android:text="Crear Evento"
+                android:text="@string/crear_evento"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"

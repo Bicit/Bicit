@@ -131,7 +131,7 @@ public class Maproute extends AppCompatActivity implements OnMapReadyCallback,
         if (id == R.id.nav_maproute) {
 
         } else if (id == R.id.nav_events) {
-            Intent intent = new Intent(Maproute.this,EventosActivity.class);
+            Intent intent = new Intent(Maproute.this,EventosListar.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_slideshow) {

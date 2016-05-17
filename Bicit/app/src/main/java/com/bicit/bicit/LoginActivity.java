@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(getApplicationContext(), "OnSuccess", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this,EventosActivity.class);
+                Intent intent = new Intent(LoginActivity.this,EventosListar.class);
                 startActivity(intent);
                 finish();
             }
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onClick(View v ){
 
-        Intent intent = new Intent(LoginActivity.this,Maproute.class);
+        Intent intent = new Intent(LoginActivity.this,EventosListar.class);
         startActivity(intent);
         finish();
 
