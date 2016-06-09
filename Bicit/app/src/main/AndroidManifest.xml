@@ -75,11 +75,12 @@
         <activity
             android:name="com.bicit.vista.EventosListar"
             android:label="@string/title_activity_eventos_listar"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.bicit.vista.DespliegueEvento"
             android:label="@string/title_activity_despliegue_evento"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name="com.bicit.vista.despliegueMapa"></activity>
     </application>
 
 </manifest>

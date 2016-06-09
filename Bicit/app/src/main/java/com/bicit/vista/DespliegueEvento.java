@@ -211,4 +211,9 @@ public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCal
         //Se descarga la imagen del perfil
         new AdaptadorImagen(this.fotoPerfil).execute(evento.getImagenGrande());
     }
+
+    public void desplegarMapa(View view){
+        Intent i = new Intent(DespliegueEvento.this, despliegueMapa.class);
+        startActivity(i);
+    }
 }
