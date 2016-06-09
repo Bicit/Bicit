@@ -1,4 +1,4 @@
-package com.bicit.bicit;
+package com.bicit.adaptador;
 
 import android.content.Context;
 import android.graphics.Color;

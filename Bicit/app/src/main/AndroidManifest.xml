@@ -51,7 +51,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".bicitSplash"
+            android:name="com.bicit.vista.bicitSplash"
             android:label="@string/title_activity_bicitSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,30 +60,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Maproute"
+            android:name="com.bicit.vista.Maproute"
             android:label="@string/title_activity_maproute"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.bicit.vista.LoginActivity"
             android:label="Login" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".CreateEvent" />
+        <activity android:name="com.bicit.vista.CreateEvent" />
         <activity
-            android:name=".EventosActivity"
-            android:label="@string/title_activity_eventos"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".EventosListar"
+            android:name="com.bicit.vista.EventosListar"
             android:label="@string/title_activity_eventos_listar"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".DespliegueEvento"
+            android:name="com.bicit.vista.DespliegueEvento"
             android:label="@string/title_activity_despliegue_evento"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

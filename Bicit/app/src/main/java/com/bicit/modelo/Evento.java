@@ -1,4 +1,4 @@
-package com.bicit.bicit;
+package com.bicit.modelo;
 
 import org.json.JSONObject;
 
@@ -14,12 +14,16 @@ public class Evento {
     private final String descripcion;
     private final String privacidad;
     private final String url;
+    private final String autor;
+    private final String imagen;
+    private final String tipo;
+    private final String imagenGrande;
     private final int duracion;
     private final int distancia;
     private int participantes;
     private int quizas;
 
-    public Evento(String nombreEvento, String fechaInicio, String fechaPublicacion, String descripcion, String privacidad, int duracion, int distancia, int participantes, int quizas, String url){
+    public Evento(String nombreEvento, String fechaInicio, String fechaPublicacion, String descripcion, String privacidad, int duracion, int distancia, int participantes, int quizas, String url, String autor, String imagen, String tipo, String imagenGrande){
         this.nombreEvento = nombreEvento;
         this.fechaInicio = fechaInicio;
         this.fechaPublicacion = fechaPublicacion;
@@ -30,6 +34,10 @@ public class Evento {
         this.participantes = participantes;
         this.quizas= quizas;
         this.url = url;
+        this.autor = autor;
+        this.tipo = tipo;
+        this.imagen = imagen;
+        this.imagenGrande = imagenGrande;
     }
 
     public Evento(JSONObject eventoJson){
@@ -43,6 +51,10 @@ public class Evento {
         this.participantes = (int)Float.parseFloat(eventoJson.optString("asistentes").toString());
         this.quizas = (int)Float.parseFloat(eventoJson.optString("tal_ves").toString());
         this.url = eventoJson.optString("url");
+        this.autor = eventoJson.optString("autor");
+        this.imagen = eventoJson.optString("imagen");
+        this.tipo = eventoJson.optString("tipo");
+        this.imagenGrande = eventoJson.optString("imagengrande");
     }
 
     public Evento(JSONObject eventoJson, String url){
@@ -56,6 +68,10 @@ public class Evento {
         this.participantes = (int)Float.parseFloat(eventoJson.optString("participantes").toString());
         this.quizas = (int)Float.parseFloat(eventoJson.optString("tal_ves").toString());
         this.url = url;
+        this.autor = eventoJson.optString("autor");
+        this.imagen = eventoJson.optString("imagen");
+        this.tipo = eventoJson.optString("tipo");
+        this.imagenGrande = eventoJson.optString("imagengrande");
     }
 
     public String getNombreEvento() {
@@ -101,5 +117,29 @@ public class Evento {
     @Override
     public String toString(){
         return this.nombreEvento+","+" Fecha: "+this.fechaInicio+"   |   Duracion: "+this.duracion+" horas" + "   |   Fecha publicacion: "+this.fechaPublicacion;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getImagenGrande() {
+        return imagenGrande;
+    }
+
+    public void agregarParticipante(){
+        this.participantes++;
+    }
+
+    public void agregarQuizas(){
+        this.quizas++;
     }
 }

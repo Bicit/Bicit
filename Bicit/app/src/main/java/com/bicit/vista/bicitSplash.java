@@ -1,4 +1,4 @@
-package com.bicit.bicit;
+package com.bicit.vista;
 
 /**
  * Created by piipe on 3/16/2016.
@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.bicit.bicit.R;
 
 public class bicitSplash extends Activity {
     // ===========================================================

@@ -8,10 +8,18 @@
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:id="@+id/fotoPerfil"
+        android:id="@+id/fotoPerfilMiniatura"
         android:src="@drawable/fotoperfil"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="Nombre"
+        android:id="@+id/nombreAutor"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -72,7 +80,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
@@ -94,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="                          "
+            android:text="                "
             android:id="@+id/textView4" />
 
         <TextView
@@ -112,6 +121,7 @@
             android:id="@+id/participantesTV"
             android:text="20"
             android:paddingLeft="5dp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -121,13 +131,37 @@
         android:layout_gravity="bottom"
         android:gravity="bottom"
         android:paddingTop="10dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quizar ire"
+                android:id="@+id/btnQuiza"
+                android:onClick="quizasEvento" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Asistire"
+                android:id="@+id/btnAsistir"
+                android:onClick="asistirEvento" />
+        </LinearLayout>
+
         <fragment
             android:id="@+id/map"
             xmlns:map="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             tools:context=".maproute"
             android:layout_gravity="bottom" />
     </LinearLayout>

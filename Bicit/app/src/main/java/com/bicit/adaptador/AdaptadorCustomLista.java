@@ -1,14 +1,15 @@
-package com.bicit.bicit;
+package com.bicit.adaptador;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.bicit.modelo.Evento;
+import com.bicit.bicit.R;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public class AdaptadorCustomLista extends BaseAdapter{
         TextView fechaPublicacion;
         TextView fechaEvento;
         TextView participantes;
+        ImageView fotoPerfil;
     }
 
     private ArrayList<Evento> data;
@@ -75,6 +77,7 @@ public class AdaptadorCustomLista extends BaseAdapter{
             holder.fechaPublicacion = (TextView) convertView.findViewById(R.id.LVfechaPublicacion);
             holder.nombre = (TextView) convertView.findViewById(R.id.LVnombre);
             holder.participantes = (TextView) convertView.findViewById(R.id.LVparticipantes);
+            holder.fotoPerfil = (ImageView) convertView.findViewById(R.id.fotoPerfilMiniatura);
 
             convertView.setTag(holder);
         }else{
@@ -85,12 +88,18 @@ public class AdaptadorCustomLista extends BaseAdapter{
         holder.participantes.setText("Asistiran: "+Integer.toString(data.get(position).getParticipantes()));
         holder.fechaPublicacion.setText(data.get(position).getFechaPublicacion());
         holder.fechaEvento.setText("Fecha: "+data.get(position).getFechaInicio());
+        new AdaptadorImagen(holder.fotoPerfil).execute(data.get(position).getImagen());
 
         return convertView;
     }
 
     public void add(Evento evento){
         this.data.add(evento);
+    }
+
+    public void clear(){
+        this.data.clear();
+        this.notifyDataSetChanged();
     }
 
     @Override

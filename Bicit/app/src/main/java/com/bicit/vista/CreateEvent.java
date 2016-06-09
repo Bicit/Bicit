@@ -1,7 +1,8 @@
-package com.bicit.bicit;
+package com.bicit.vista;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.provider.MediaStore;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,13 +18,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
+import com.bicit.adaptador.AdaptadorRequest;
+import com.bicit.adaptador.VolleyS;
+import com.bicit.modelo.Evento;
+import com.bicit.bicit.R;
+import com.facebook.Profile;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -41,6 +44,8 @@ public class CreateEvent extends AppCompatActivity {
     private EditText distacia;
     private EditText duracion;
     private boolean isPrivate = false;
+
+    private ProgressDialog carga;
 
     //Elementos para la comunicacion con el servidor
     private VolleyS volley;
@@ -76,9 +81,9 @@ public class CreateEvent extends AppCompatActivity {
             }
         });
 
+
         volley = VolleyS.getInstance(this.getApplicationContext());
         colaRequest = volley.getColaRequest();
-
     }
 
     public void createEvent(View v ){
@@ -86,7 +91,7 @@ public class CreateEvent extends AppCompatActivity {
         //Se reciben los datos de los campos
         String name=this.eventName.getText().toString();
         String fechaInicio=this.startDate.getText().toString();
-        String fechaPublicacion=fechaHoraActual();
+        String fechaPublicacion=AdaptadorRequest.fechaActual();
         String descripcion=this.description.getText().toString();
         String privacidad;
         //Se evalua el check de privacidad
@@ -95,43 +100,28 @@ public class CreateEvent extends AppCompatActivity {
         int duracion=Integer.parseInt(this.duracion.getText().toString());
         int distancia=Integer.parseInt(this.distacia.getText().toString());
 
-        Evento evento = new Evento(name,fechaInicio,fechaPublicacion,descripcion,privacidad,duracion,distancia, 0, 0, "");
+        Profile perfiActual = Profile.getCurrentProfile();
+        String autor = perfiActual.getName();
+        String imagen = perfiActual.getProfilePictureUri(120,120).toString();
+        String tipo = "persona";
+        String imagenGrande = perfiActual.getProfilePictureUri(400,400).toString();
+
+        Evento evento = new Evento(name,fechaInicio,fechaPublicacion,descripcion,privacidad,duracion,distancia, 0, 0, "", autor, imagen, tipo, imagenGrande);
         agregarEvento(evento);
-        Toast.makeText(getApplicationContext(), "Enviando...", Toast.LENGTH_SHORT);
 
-    }
-
-    public void addToQueue(Request request) {
-        if (request != null) {
-            request.setTag(this);
-            if (colaRequest == null)
-                colaRequest = volley.getColaRequest();
-            request.setRetryPolicy(new DefaultRetryPolicy(
-                    60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-            ));
-            colaRequest.add(request);
-        }
     }
 
     public void agregarEvento(Evento evento){
         String url = "https://bicits.herokuapp.com/events.json";
-        HashMap<String, String> parametros = new HashMap<>();
-        parametros.put("nombre", evento.getNombreEvento());
-        parametros.put("autor", "bicit");
-        parametros.put("privacidad", evento.getPrivacidad());
-        parametros.put("fecha_publicacion", evento.getFechaPublicacion());
-        parametros.put("fecha_evento", evento.getFechaInicio());
-        parametros.put("distancia", Integer.toString(evento.getDistancia()));
-        parametros.put("duracion", Integer.toString(evento.getDuracion()));
-        parametros.put("asistentes", Integer.toString(evento.getParticipantes()));
-        parametros.put("tal_ves", Integer.toString(evento.getQuizas()));
-        parametros.put("descripcion", evento.getDescripcion());
-        JSONObject eventoJson = new JSONObject(parametros);
+        this.carga = ProgressDialog.show(this, "Cargando", "Espere unos segundos por favor", true, false);
+        JSONObject eventoJson = AdaptadorRequest.crearRequestEvento(evento);
+
         JsonObjectRequest request = new JsonObjectRequest(url, eventoJson, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Intent resultado = new Intent();
                 setResult(EventosListar.CREAR_EVENTO, resultado);
+                carga.dismiss();
                 finish();
             }
         }, new Response.ErrorListener(){
@@ -139,17 +129,11 @@ public class CreateEvent extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error.getMessage());
-                Toast.makeText(CreateEvent.this, "Error, no se ha crear el evento", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateEvent.this, "Error, no se ha creado el evento", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
 
-        addToQueue(request);
-
-    }
-
-    public String fechaHoraActual(){
-        return new SimpleDateFormat( "yyyy-MM-dd", java.util.Locale.getDefault()).format(Calendar.getInstance() .getTime());
-        //return "Test";
+        volley.agregarPila(request);
     }
 }

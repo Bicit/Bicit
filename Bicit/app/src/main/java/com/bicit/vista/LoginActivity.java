@@ -1,18 +1,21 @@
-package com.bicit.bicit;
+package com.bicit.vista;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bicit.bicit.R;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -35,25 +38,31 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = (LoginButton)findViewById(R.id.login_button);
 
         this.btnLogin = (Button) findViewById(R.id.btnLogin);
+
+        //Se obtinene el perfil actual
+        Profile perfilActual = Profile.getCurrentProfile();
+
+        //Se revisa si no es nulo
+        //Si no es nulo se procede a llamar la siguiente actividad
+        //Ya que se inicio sesion anteriormente
+        if(AccessToken.getCurrentAccessToken() != null){
+            llamarPrincipal();
+        }
+
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(getApplicationContext(), "OnSuccess", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this,EventosListar.class);
-                startActivity(intent);
-                finish();
+                //Se inicia la actividad principal
+                llamarPrincipal();
             }
 
             @Override
             public void onCancel() {
-                Toast.makeText(getApplicationContext(), "OnCancel", Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
             public void onError(FacebookException e) {
-                Toast.makeText(getApplicationContext(), "OnError", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getApplicationContext(), "Error al iniciar sesion", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -72,5 +81,10 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void llamarPrincipal(){
+        Intent intent = new Intent(LoginActivity.this,EventosListar.class);
+        startActivity(intent);
+        finish();
+    }
 
 }

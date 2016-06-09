@@ -1,9 +1,11 @@
-package com.bicit.bicit;
+package com.bicit.vista;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,12 +25,18 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.bicit.adaptador.AdaptadorCustomLista;
+import com.bicit.adaptador.VolleyS;
+import com.bicit.bicit.R;
+import com.bicit.modelo.Evento;
+import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class EventosListar extends AppCompatActivity
@@ -44,6 +52,8 @@ public class EventosListar extends AppCompatActivity
     private AdaptadorCustomLista adaptador;
     private ArrayList<Evento> eventos;
 
+    private ProgressDialog carga;
+
     //Codigo de respuesta a la creacion de eventos
     public static int CREAR_EVENTO = 1;
 
@@ -54,6 +64,8 @@ public class EventosListar extends AppCompatActivity
         setContentView(R.layout.activity_eventos_listar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -70,8 +82,7 @@ public class EventosListar extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(EventosListar.this, CreateEvent.class);
-                startActivityForResult(i, EventosListar.CREAR_EVENTO);
+                crearEvento();
             }
         });
 
@@ -79,6 +90,8 @@ public class EventosListar extends AppCompatActivity
         this.eventos = new ArrayList<>();
         this.listaEventos = (ListView) findViewById(R.id.listaEventos);
         this.adaptador = new AdaptadorCustomLista(this, eventos);
+        this.carga = ProgressDialog.show(this, "Cargando", "Espere unos segundos por favor", true, false);
+
         listaEventos.setAdapter(adaptador);
 
         //Se cambia el comportamiento de la lista al seleccionar un item
@@ -96,24 +109,11 @@ public class EventosListar extends AppCompatActivity
         volley = VolleyS.getInstance(this.getApplicationContext());
         colaRequest = volley.getColaRequest();
         solicitarEventos();
-        Toast.makeText(getApplicationContext(),"Cargando...", Toast.LENGTH_LONG);
-    }
-
-    //Metodos para la sincronizacion con volley
-
-    public void addToQueue(Request request) {
-        if (request != null) {
-            request.setTag(this);
-            if (colaRequest == null)
-                colaRequest = volley.getColaRequest();
-            request.setRetryPolicy(new DefaultRetryPolicy(
-                    60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-            ));
-            colaRequest.add(request);
-        }
     }
 
     public void solicitarEventos(){
+        carga.onStart();
+        adaptador.clear();
         String url = "https://bicits.herokuapp.com/events.json";
         JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
@@ -128,13 +128,14 @@ public class EventosListar extends AppCompatActivity
                 }
             }
             adaptador.notifyDataSetChanged();
+            carga.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
             }
         });
-        addToQueue(request);
+        volley.agregarPila(request);
     }
 
     //Cuando vuelva de el crear evento
@@ -189,18 +190,75 @@ public class EventosListar extends AppCompatActivity
             finish();
         } else if (id == R.id.nav_events) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_ayuda) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_cerrar) {
 
-        } else if (id == R.id.nav_share) {
+            if(Profile.getCurrentProfile() == null){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Usted no ha iniciado sesión")
+                        .setTitle("Atención!!")
+                        .setCancelable(false)
+                        .setNeutralButton("Aceptar",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("¿Desea cerrar sesión?")
+                        .setTitle("Atención")
+                        .setCancelable(false)
+                        .setNegativeButton("Cancelar",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                })
+                        .setPositiveButton("Continuar",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        LoginManager.getInstance().logOut();
+                                        Profile.setCurrentProfile(null);
+                                        Intent i = new Intent(EventosListar.this, LoginActivity.class);
+                                        startActivity(i);
+                                        finish();
+                                    }
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
 
-        } else if (id == R.id.nav_send) {
+
+        } else if (id == R.id.nav_view) {
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void crearEvento(){
+        if(Profile.getCurrentProfile() != null){
+            Intent i = new Intent(EventosListar.this, CreateEvent.class);
+            startActivityForResult(i, EventosListar.CREAR_EVENTO);
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("No se puede crear un evento sin iniciar sesión")
+                    .setTitle("Atención!!")
+                    .setCancelable(false)
+                    .setNeutralButton("Aceptar",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 }

@@ -1,32 +1,39 @@
-package com.bicit.bicit;
+package com.bicit.vista;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.android.gms.appdatasearch.GetRecentContextCall;
+import com.bicit.adaptador.AdaptadorImagen;
+import com.bicit.adaptador.AdaptadorRequest;
+import com.bicit.adaptador.VolleyS;
+import com.bicit.modelo.Evento;
+import com.bicit.modelo.Mapa;
+import com.bicit.bicit.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCallback{
@@ -43,6 +50,11 @@ public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCal
     private TextView txtQuiza;
     private TextView txtParticipantes;
     private TextView txtDescripcion;
+    private TextView txtAutor;
+    private ImageView fotoPerfil;
+    private String urlEvento;
+    private ProgressDialog carga;
+    private Evento eventoMostrado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,22 +62,27 @@ public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCal
         setContentView(R.layout.activity_despliegue_evento);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        /*
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+**/
         //Se intancian los elementos de la interfaz de usuario
         txtNombre = (TextView) findViewById(R.id.nombreDespliegue);
         txtFecha = (TextView) findViewById(R.id.fechaTV);
         txtQuiza = (TextView) findViewById(R.id.quizaTV);
         txtParticipantes = (TextView) findViewById(R.id.participantesTV);
         txtDescripcion = (TextView) findViewById(R.id.descripcionTV);
+        txtAutor = (TextView) findViewById(R.id.nombreAutor);
+        fotoPerfil = (ImageView) findViewById(R.id.fotoPerfilMiniatura);
 
         volley = VolleyS.getInstance(this.getApplicationContext());
         colaRequest = volley.getColaRequest();
 
+        this.carga = ProgressDialog.show(this, "Cargando", "Espere unos segundos por favor", true, false);
+
         //Capturar la url enviada
-        String urlEvento = this.getIntent().getStringExtra("url");
+        urlEvento = this.getIntent().getStringExtra("url");
         crearEvento(urlEvento);
     }
 
@@ -110,13 +127,14 @@ public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCal
     //Metodo que crea un evento a partir de una direccion url
     public void crearEvento(String url)
     {
+        carga.onStart();
         JsonObjectRequest request = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>(){
 
             @Override
             public void onResponse(JSONObject response) {
-                System.out.println("hay respuesta");
-                Evento evento = new Evento(response);
-                desplegarEvento(evento);
+                carga.dismiss();
+                eventoMostrado = new Evento(response);
+                desplegarEvento(eventoMostrado);
             }
         }, new Response.ErrorListener(){
 
@@ -125,20 +143,60 @@ public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCal
                 System.out.println(error.getMessage());
             }
         });
-        addToQueue(request);
+        volley.agregarPila(request);
     }
 
-    //Metodos para la sincronizacion con volley
-    public void addToQueue(Request request) {
-        if (request != null) {
-            request.setTag(this);
-            if (colaRequest == null)
-                colaRequest = volley.getColaRequest();
-            request.setRetryPolicy(new DefaultRetryPolicy(
-                    60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-            ));
-            colaRequest.add(request);
-        }
+    public void asistirEvento(final View view){
+        eventoMostrado.agregarParticipante();
+
+        JSONObject requestObject = AdaptadorRequest.crearRequestEvento(eventoMostrado);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, this.urlEvento, requestObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                crearEvento(urlEvento);
+                Button btnAsistir = (Button) view;
+                btnAsistir.setClickable(false);
+                btnAsistir.setText("Ya asistes");
+
+                Button btnQuizas = (Button) findViewById(R.id.btnQuiza);
+                btnQuizas.setClickable(false);
+
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Error en conexion", Toast.LENGTH_SHORT).show();
+            }
+        });
+        volley.agregarPila(request);
+    }
+
+    public void quizasEvento(final View view){
+        eventoMostrado.agregarQuizas();
+
+        JSONObject requestObject = AdaptadorRequest.crearRequestEvento(eventoMostrado);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT,this.urlEvento, requestObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                crearEvento(urlEvento);
+                Button btn = (Button) view;
+                btn.setClickable(false);
+                btn.setText("Quizas iras");
+
+                Button btnAsistir = (Button) findViewById(R.id.btnAsistir);
+                btnAsistir.setClickable(false);
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Error en conexion", Toast.LENGTH_SHORT).show();
+            }
+        });
+        volley.agregarPila(request);
     }
 
     //Metodo para desplegar un objeto
@@ -148,5 +206,9 @@ public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCal
         this.txtParticipantes.setText(Integer.toString(evento.getParticipantes()));
         this.txtQuiza.setText(Integer.toString(evento.getQuizas()));
         this.txtDescripcion.setText(evento.getDescripcion());
+        this.txtAutor.setText(evento.getAutor());
+
+        //Se descarga la imagen del perfil
+        new AdaptadorImagen(this.fotoPerfil).execute(evento.getImagenGrande());
     }
 }

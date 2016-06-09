@@ -1,4 +1,4 @@
-package com.bicit.bicit;
+package com.bicit.vista;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.bicit.modelo.Mapa;
+import com.bicit.bicit.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -134,13 +136,13 @@ public class Maproute extends AppCompatActivity implements OnMapReadyCallback,
             Intent intent = new Intent(Maproute.this,EventosListar.class);
             startActivity(intent);
             finish();
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_events) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_ayuda) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_cerrar) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_view) {
 
         }
 

@@ -1,4 +1,4 @@
-package com.bicit.bicit;
+package com.bicit.modelo;
 
 import android.content.Context;
 import android.location.Criteria;
