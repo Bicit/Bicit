@@ -55,6 +55,7 @@ public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCal
     private String urlEvento;
     private ProgressDialog carga;
     private Evento eventoMostrado;
+    private String kmlUrl="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +136,7 @@ public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCal
                 carga.dismiss();
                 eventoMostrado = new Evento(response);
                 desplegarEvento(eventoMostrado);
+                kmlUrl = response.optString("kmlurl").toString();
             }
         }, new Response.ErrorListener(){
 
@@ -214,6 +216,7 @@ public class DespliegueEvento extends AppCompatActivity implements OnMapReadyCal
 
     public void desplegarMapa(View view){
         Intent i = new Intent(DespliegueEvento.this, despliegueMapa.class);
+        i.putExtra("kmlurl", this.kmlUrl);
         startActivity(i);
     }
 }

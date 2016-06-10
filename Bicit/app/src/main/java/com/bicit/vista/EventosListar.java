@@ -243,6 +243,10 @@ public class EventosListar extends AppCompatActivity
     }
 
     public void crearEvento(){
+
+        Intent i = new Intent(EventosListar.this, CreateEvent.class);
+        startActivityForResult(i, EventosListar.CREAR_EVENTO);
+/*
         if(Profile.getCurrentProfile() != null){
             Intent i = new Intent(EventosListar.this, CreateEvent.class);
             startActivityForResult(i, EventosListar.CREAR_EVENTO);
@@ -260,5 +264,6 @@ public class EventosListar extends AppCompatActivity
             AlertDialog alert = builder.create();
             alert.show();
         }
+        **/
     }
 }

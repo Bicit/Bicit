@@ -16,6 +16,6 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".maproute" />
+        tools:context="com.bicit.vista.despliegueMapa" />
 
 </RelativeLayout>

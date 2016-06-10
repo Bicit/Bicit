@@ -13,7 +13,11 @@ import com.google.maps.android.kml.KmlLayer;
 
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Created by jgavi on 4/04/2016.
@@ -50,6 +54,26 @@ public class Mapa {
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return this.mapaVisual;
+    }
+
+    public GoogleMap cargarInputStream(URL urlKml){
+
+        try {
+            HttpURLConnection urlConnection = (HttpURLConnection) urlKml.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoOutput(true);
+            urlConnection.connect();
+
+            InputStream inputStream = urlConnection.getInputStream();
+            KmlLayer layer = new KmlLayer(mapaVisual, inputStream, this.contextoActual);
+            layer.addLayerToMap();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
             e.printStackTrace();
         }
 
